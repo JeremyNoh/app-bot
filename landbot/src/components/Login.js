@@ -1,10 +1,25 @@
-import React from "react";
-import { TextInput, Button, Pane, Text } from "evergreen-ui";
+import React, { useState } from "react";
+import {
+  TextInput,
+  Button,
+  Pane,
+  Text,
+  TabNavigation,
+  Tab
+} from "evergreen-ui";
 import useInput from "../hooks/useInput";
 
+// tabs for Gender
+export const tabGender = ["Femme", "Homme"];
+
 export default function App(props) {
+  // All useState Definition
+
+  // input Name Value
   const username = useInput();
-  const password = useInput();
+
+  // Index of the tabGender Selection
+  const [indexGender, setIndexGender] = useState(0);
 
   return (
     <div className="AppContent">
@@ -18,7 +33,7 @@ export default function App(props) {
         alignItems="center"
         flexDirection="column"
       >
-        <h1> Login</h1>
+        <h1> 🤖 Cocktail 🤖</h1>
 
         <Text>Username : </Text>
         <TextInput
@@ -29,23 +44,31 @@ export default function App(props) {
         />
         <br />
 
-        {/* <Text>Password :</Text>
-        <TextInput
-          label="A controlled text input field"
-          required
-          description="This is a description."
-          value={password}
-          type="password"
-          {...password}
-        /> */}
+        <TabNavigation>
+          {tabGender.map((tab, index) => (
+            <Tab
+              key={tab}
+              id={tab}
+              onSelect={() => {
+                setIndexGender(index);
+              }}
+              isSelected={index === indexGender}
+            >
+              {tab}
+            </Tab>
+          ))}
+        </TabNavigation>
         <br />
         <Button
-          disabled={!username || !password}
+          disabled={!username}
           marginRight={16}
           appearance="primary"
           intent="success"
           onClick={() => {
-            props.setUSer({ name: username.value, gender: false });
+            props.setUSer({
+              name: username.value,
+              gender: tabGender[indexGender]
+            });
             props.isAuthFn(true);
           }}
         >

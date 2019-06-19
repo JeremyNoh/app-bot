@@ -1,40 +1,28 @@
 import React, { useState, useEffect } from "react";
-import { toaster } from "evergreen-ui";
-import logo from "../logo.svg";
-
-import botsvg from "../assets/botsvg.svg";
-
-import "./botcss.css";
 
 import { Launcher } from "react-chat-window";
 import botImage from "../assets/bot.png";
+import { responseBOT } from "../api";
 
-async function fetchInfo(stringUser) {
-  const response = await fetch("http://localhost:5000/api/game", {
-    headers: {
-      "Content-Type": "application/json"
-    },
-    method: "POST",
-    body: JSON.stringify(stringUser)
-  });
+import { Badge } from "evergreen-ui";
 
-  const json = await response.json();
-
-  if (json.data) {
-    toaster.info("Tu as reçu un nouveau message", {
-      duration: 3
-    });
-  } else {
-    toaster.danger(`Une erreur est survenue`, {
-      duration: 5
-    });
-  }
-}
 export default function Chat(props) {
+  // All useState Definition
+
+  // list of the Conversation .. maybe Stock in AsyncStorage :P
   const [messageList, setMessageList] = useState([]);
+
+  // when user connect First in App
   const [firstInApp, setFirstInApp] = useState(true);
+
+  // just for the Notification Badge
   const [countMessage, setCountMessage] = useState(1);
+
+  // trigger for Bot Reponse
   const [isMessageSend, setIsMessageSend] = useState(undefined);
+
+  // info of One Drink | Cocktail
+  const [drink, setDrink] = useState(undefined);
 
   useEffect(() => {
     //   ComponentDidMount
@@ -43,7 +31,9 @@ export default function Chat(props) {
         author: "bot",
         type: "text",
         data: {
-          text: `Bonjour ${props.user.name}, \n en quoi puis-je t'aider ? 🤗`
+          text: `Bonjour ${
+            props.user.name
+          }, \n tape : \n help ou aide \npour en savoir plus   🤗`
         }
       };
       setMessageList([...messageList, obj]);
@@ -52,15 +42,22 @@ export default function Chat(props) {
 
     // when the User Send a Message
     if (isMessageSend) {
-      console.log(isMessageSend);
-      let obj = {
-        author: "bot",
-        type: "text",
-        data: {
-          text: "Débrouilles toi !!"
-        }
-      };
-      setMessageList([...messageList, obj]);
+      const toto = responseBOT(isMessageSend)
+        .then(value => {
+          let obj = {
+            author: "bot",
+            type: "text",
+            data: {
+              text: value.result
+            }
+          };
+
+          if (value.hasOwnProperty("drink")) {
+            setDrink(value.drink);
+          }
+          setMessageList([...messageList, obj]);
+        })
+        .catch(err => console.log(err));
       setIsMessageSend(undefined);
     }
   });
@@ -68,14 +65,39 @@ export default function Chat(props) {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <div className="robot">
-          <img src={botsvg} />
-        </div> */}
-        <p>
-          Bienvenue <code>{props.user.name}</code> !{" "}
-        </p>
-        <p>Commence la discution avec ce Bot concernant les jeux.</p>
+        {drink === undefined && (
+          <>
+            <p>
+              Bienvenue <code>{props.user.name}</code> !{" "}
+            </p>
+            <p>
+              Commence la discution avec le Bot tu retrouveras içi toutes les
+              infos pour préparer ton Cocktail
+            </p>
+          </>
+        )}
+
+        {drink && (
+          <>
+            <p>
+              <code> {drink.strDrink}</code>
+            </p>
+            <p>
+              {drink.ingredients &&
+                drink.ingredients.map((ingredient, index) => {
+                  return (
+                    <Badge key={index} color="purple" isSolid marginRight={8}>
+                      {ingredient}
+                    </Badge>
+                  );
+                })}
+            </p>
+            <br />
+            <img src={drink.strDrinkThumb} className="App-logo" alt="logo" />
+            <p>{drink.strInstructions}</p>
+          </>
+        )}
+
         <Launcher
           agentProfile={{
             teamName: `Bienvenue ${props.user.name}`,

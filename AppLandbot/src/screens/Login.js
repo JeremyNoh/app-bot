@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
-import { View, StyleSheet, TextInput, Alert, Text } from "react-native";
+import { View, StyleSheet, TextInput } from "react-native";
 
+// Component
 import Container from "../components/Container";
-import Title from "../components/Title";
 import useInput from "../hooks/useInput";
 
-// Libs Extenal
 import { Button, ButtonGroup, Header } from "react-native-elements";
 import {
   BUTTON_COLOR_ONE,
@@ -14,10 +13,18 @@ import {
   BACKGROUND_BODY
 } from "../../assets/colors";
 
+// tabs for Gender
+export const Gender = ["Femme", "Homme"];
+
 export default function Login(props) {
-  const Gender = ["Femme", "Homme"];
+  // All useState Definition
+
+  // input Name Value
   const username = useInput();
+
+  // Index of the tabGender Selection
   const [indexGender, setIndexGender] = useState(0);
+
   return (
     <>
       <Header
