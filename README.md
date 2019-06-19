@@ -36,7 +36,8 @@ il se base pour l'instant sur des mots qu'il reconnait pour ensuite faire une re
 
 ### Fonctionnement d'un Bot 
 
-tu as plusieurs **commandes | mots clés** disponible pour que le bot te comprenne : 
+tu as plusieurs **commandes | mots clés** disponible pour que le bot te comprenne :
+
 |Commande|Description|Exemple|
 |--|--|--|
 |/help   | Visualiser la liste des commandes |help stp bot |
