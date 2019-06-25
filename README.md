@@ -4,6 +4,8 @@
 > **Note:** l'abus d'alcool est dangereux pour la santé...
 
 
+*le site est actuellement disponible à cette adresse* [http://appbot.surge.sh/](http://appbot.surge.sh/) Allez donc y faire un tour 😁
+
 Le but de ce projet est de créer un Bot 
 *Cross-Plateform*  permettant de vous renseigner et de vous aider à trouver un Cocktail selon vos goûts
 
