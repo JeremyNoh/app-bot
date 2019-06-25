@@ -49,12 +49,6 @@ tu as plusieurs **commandes | mots clés** disponible pour que le bot te compren
 |/random  | Affiche les Infos d'un Cocktail Aléatoire | Je voudrais un Cocktail Random please |
 
 
-
-- Chaque mauvaise réponse te retire _une_ vie
-- Si tu n'as plus de vie tu as perdu
-- Si tu arrives au bout du Quizz tu gagne une Carte pour ton Deck
-- ne t'inquiète pas ce n'est pas encore chronométré alors prends ton temps et réponds juste !
-
 > **Attention:** Pour la recherche par *Categorie* ou par *Ingrédient*  tu n'as pas le choix c'est juste deux mots ⇒ **Category Gin**
 
 ## Exécution
